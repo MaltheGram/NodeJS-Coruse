@@ -1,0 +1,13 @@
+{
+  "weaponsList": {
+    "ak47": {
+      "model": "ak47",
+      "rounds": 30
+    },
+    "CT": {
+      "model": "Colt",
+      "rounds": 35
+
+    }
+  }
+}
