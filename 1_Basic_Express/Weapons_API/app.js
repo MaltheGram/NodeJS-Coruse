@@ -13,7 +13,7 @@ const weaponsList = {
 
         }
 }
-
+// Root
 app.get("/",(req, res) => {
     res.send({
         message: "Welcome to my REST API for Weapons"
@@ -28,9 +28,12 @@ app.get("/weapons/:id", (req, res) => {
 // Query String
 app.get("/weapons", (req, res) => {
     res.send({
-        message: `Info about ${req.query.model}`
+        message: `Info about ${req.query.model}` || "hello "
     })
+    console.log("First call")
+    // TODO: If no query params, send complete list.
 })
+
 
 app.listen(8080, () => {
     console.log("Listening on port",8080)
