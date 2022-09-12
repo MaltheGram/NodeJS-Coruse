@@ -51,17 +51,20 @@ app.post("/weapons", (req, res) => {
 
 // Update
 app.put("/weapons/:id",(req,res) => {
+    let id = req.params.id
     const weapon = {
         name: req.body.name,
         price: req.body.price
     }
     console.log(weapon)
-    weapons.splice(0,0,weapon)
+    weapons.splice(id,0,weapon)
 })
 
 // Delete
 app.delete("/weapons/:id", (req, res) => {
-    weapons.splice(1,1)
+    let id = req.params.id
+    console.log(id)
+    weapons.splice(id,1)
 })
 
 app.listen(8080, () => {
