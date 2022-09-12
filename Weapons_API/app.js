@@ -1,18 +1,22 @@
-const express = require("express")
+import express from "express"
+import { logConsole } from "./Utils.js";
 const app = express()
-const weaponsList = {
-        "ak": {
+
+const weapons = {
+        1: {
             "name": "ak47",
             "rounds": 30,
             "price" : 3000
         },
-        "colt": {
+        2: {
             "name": "Colt",
             "rounds": 35,
             "price": 3500
 
         }
 }
+
+app.use(express.json())
 // Root
 app.get("/",(req, res) => {
     res.send({
@@ -25,18 +29,16 @@ app.get("/weapons/:id", (req, res) => {
     Number(req.params.id) === 1 ? res.send({Weapon: "AK47", GOAT: true}) : res.send({errorMessage: `No weapon with given id: ${req.params.id}`})
 
 })
-// Query String
+// Query String --> req.query
 app.get("/weapons", (req, res) => {
     res.send({
-        message: `Info about ${req.query.model}` || "hello "
+        data: weapons
     })
-    console.log("First call")
-    // TODO: If no query params, send complete list.
 })
 
 
 app.listen(8080, () => {
-    console.log("Listening on port",8080)
+    logConsole(8080)
 })
 
 
