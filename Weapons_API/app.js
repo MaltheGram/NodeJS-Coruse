@@ -1,5 +1,8 @@
 import express from "express"
 import bodyParser from "body-parser"
+import {v4 as uuidv4} from 'uuid';
+
+uuidv4()
 
 const app = express()
 
@@ -8,10 +11,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-const weapons = [
-    { id: 0, name: "AK-47", price: 3500 },
-    { id: 1, name: "COLT", price: 3000 }
+let weapons = [
+    { id: uuidv4(), name: "AK-47", price: 3500 },
+    { id: uuidv4(), name: "COLT", price: 3000 },
+    { id: uuidv4(), name: "RPG", price: 6000 },
+    { id: uuidv4(), name: "Knife", price: 300 }
 ]
+console.log(weapons)
 
 
 
@@ -27,9 +33,10 @@ app.get("/",(req, res) => {
 
 // Path variable
 app.get("/api/weapons/:id", (req, res) => {
-    const id = Number(req.params.id)
-    const findById = weapons[id]
-    findById ? res.send(weapons[id]) : res.status(404).send({errorMessage: `No weapon with given id ${id} exists`})
+    const id = req.params.id
+    console.log(id)
+    const findWeapon = weapons.find((weapon => weapon.id === id))
+    findWeapon ? res.send(findWeapon) : res.status(404).send({errorMessage: `No weapon with given id ${id} exists`})
 
 
 })
@@ -43,8 +50,10 @@ app.get("/api/weapons", (req, res) => {
 // Post
 app.post("/api/weapons", (req, res) => {
     const weapon = req.body
+    weapon.id = uuidv4()
 
     console.log(weapon)
+
     weapons.push(weapon)
     res.send(`Created new weapon: ${weapon.name}`)
 })
@@ -53,11 +62,11 @@ app.post("/api/weapons", (req, res) => {
 // For testing purpose we leave it in
 
 app.put("/api/weapons/:id",(req,res) => {
-    const id = Number(req.params.id)
+    const id = req.params.id
     const weaponToPatch = weapons.find((weapon) => weapon.id === id)
     const {name, price} = req.body
 
-    
+
     weaponToPatch.name = name ? name : weapons[id].name
     weaponToPatch.price = price ? price : weapons[id].price
 
@@ -67,7 +76,7 @@ app.put("/api/weapons/:id",(req,res) => {
 
 // Patch a single or
 app.patch("/api/weapons/:id", (req,res) => {
-    const id = Number(req.params.id)
+    const id = req.params.id
     const {name, price} = req.body
 
     const weaponToPatch = weapons.find((weapon) => weapon.id === id)
@@ -81,12 +90,12 @@ app.patch("/api/weapons/:id", (req,res) => {
 
 // Delete
 app.delete("/api/weapons/:id", (req, res) => {
-    const id = Number(req.params.id)
-    const findById = weapons[id]
-    console.log(id)
-    findById ? res.send(`Deleted weapon ${weapons[id].name}...`) : res.status(404).send({errorMessage: `No weapon with id: ${id}`})
-    weapons.splice(id,1)
+    const id = req.params.id
+    const findWeapon = weapons.find((weapon => weapon.id === id))
 
+    weapons = weapons.filter(weapon => weapon.id !== id)
+
+    findWeapon ? res.send(`Deleted weapon ${JSON.stringify(findWeapon,null,2)}...`) : res.status(404).send({errorMessage: `No weapon with id: ${id}`})
 
 })
 
