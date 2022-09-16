@@ -17,8 +17,6 @@ let weapons = [
     { id: uuidv4(), name: "RPG", price: 6000 },
     { id: uuidv4(), name: "Knife", price: 300 }
 ]
-console.log(weapons)
-
 
 
 //app.use(express.json())
@@ -34,7 +32,6 @@ app.get("/",(req, res) => {
 // Path variable
 app.get("/api/weapons/:id", (req, res) => {
     const id = req.params.id
-    console.log(id)
     const findWeapon = weapons.find((weapon => weapon.id === id))
     findWeapon ? res.send(findWeapon) : res.status(404).send({errorMessage: `No weapon with given id ${id} exists`})
 
@@ -42,17 +39,13 @@ app.get("/api/weapons/:id", (req, res) => {
 })
 // Query String --> req.query
 app.get("/api/weapons", (req, res) => {
-    res.send({
-        data: weapons
-    })
+    res.send({data: weapons})
 })
 
 // Post
 app.post("/api/weapons", (req, res) => {
     const weapon = req.body
     weapon.id = uuidv4()
-
-    console.log(weapon)
 
     weapons.push(weapon)
     res.send(`Created new weapon: ${weapon.name}`)
@@ -70,11 +63,11 @@ app.put("/api/weapons/:id",(req,res) => {
     weaponToPatch.name = name ? name : weapons[id].name
     weaponToPatch.price = price ? price : weapons[id].price
 
-    res.send(`Weapon with id ${id} has been updated`)
+    res.status(200).send(`Weapon with id ${id} has been updated`)
 })
 
 
-// Patch a single or
+// Patch a single or multiple fields
 app.patch("/api/weapons/:id", (req,res) => {
     const id = req.params.id
     const {name, price} = req.body
@@ -85,7 +78,7 @@ app.patch("/api/weapons/:id", (req,res) => {
     weaponToPatch.price = price ? price : weapons[id].price
 
 
-    res.send(`Weapon with id ${id} has been patched`)
+    res.status(200).send(`Weapon with id ${id} has been patched`)
 })
 
 // Delete
