@@ -1,6 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import {v4 as uuidv4} from 'uuid';
+import {logConsole} from "./Utils.js";
 
 uuidv4()
 
@@ -63,22 +64,21 @@ app.put("/api/weapons/:id",(req,res) => {
     weaponToPatch.name = name ? name : weapons[id].name
     weaponToPatch.price = price ? price : weapons[id].price
 
-    res.status(200).send(`Weapon with id ${id} has been updated`)
+    res.send(`Weapon with id ${id} has been updated`)
 })
 
 
 // Patch a single or multiple fields
 app.patch("/api/weapons/:id", (req,res) => {
     const id = req.params.id
-    const {name, price} = req.body
 
     const weaponToPatch = weapons.find((weapon) => weapon.id === id)
 
-    weaponToPatch.name = name ? name : weapons[id].name
-    weaponToPatch.price = price ? price : weapons[id].price
+    Object.keys(req.body).forEach(field => {
+        weaponToPatch[field] = req.body[field]
+    })
 
-
-    res.status(200).send(`Weapon with id ${id} has been patched`)
+    res.send(`Weapon with id ${id} has been patched:\n ${JSON.stringify(weaponToPatch,null,2)}`)
 })
 
 // Delete
