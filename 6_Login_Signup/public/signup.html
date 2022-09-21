@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>I Sign up |</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+<div class="main">
+    <input type="checkbox" id="chk">
+
+    <div class="signup">
+        <form>
+            <label for="chk">Sign up</label>
+            <input type="text" name="txt" placeholder="User name" required="">
+            <input type="email" name="email" placeholder="Email" required="">
+            <input type="password" name="pswd" placeholder="Password" required="">
+            <button onclick="signup() ">Sign up</button>
+        </form>
+    </div>
+
+    <div class="login">
+        <form>
+            <label for="chk">Login</label>
+            <input type="email" name="email" placeholder="Email" required="">
+            <input type="password" name="pswd" placeholder="Password" required="">
+            <button onclick="login() ">Login</button>
+            <span> <a onclick="message()" href="#">Forgot password?</a></span>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    const message = () => {
+        alert('Ideally this button would take you to another page to reset password...')
+    }
+    const signup = (res) => {
+        alert("Congrats. Let's image you signed up")
+    }
+    const login = () => {
+        alert("Congrats. Let's image you logged in!")
+    }
+</script>

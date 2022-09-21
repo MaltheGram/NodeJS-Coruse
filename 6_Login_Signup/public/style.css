@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
+}
+
+.menu {
+  background-color: #24243e;
+  box-shadow: 0 0 20px 5px #000000;
+}
+.menu ul {
+  list-style: none;
+}
+.menu ul li {
+  color: aliceblue;
+  font-size: 1.25em;
+  font-weight: 900;
+  box-shadow: 0 0 5px 5px #000000;
+  background-color: #24243e;
+  border-radius: 25px;
+  margin-right: 5em;
+  padding: 25px;
+  display: inline-block;
+}
+.menu ul li:nth-child(4),
+.menu ul li:nth-child(5) {
+  float: right;
+}
+.menu a {
+  color: aliceblue;
+  text-decoration: none;
+}
+.menu a:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=style.css.map */
