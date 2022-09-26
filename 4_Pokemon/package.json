@@ -5,7 +5,10 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start-dev" : "nodemon app.js",
+    "start-dev": "cross-env PORT=8090 nodemon app.js",
     "start-prod": "node app.js"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
