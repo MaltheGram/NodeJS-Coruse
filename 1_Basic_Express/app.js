@@ -1,7 +1,5 @@
-const express = require('express')
+import express from "express"
 
-// Instantiate the library express
-// const app = require("express")(); is also an option
 const app = express()
 
 // route
@@ -10,6 +8,17 @@ app.get('/', (request, response) => {
         message: 'Created my fist route, Check!'
     })
 })
+
+app.get("/timezone", (req, res) => {
+    const newDate = new Date().toLocaleString()
+    // American week date starts with sunday
+    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+
+    res.send({data: newDate})
+})
+
+
         // endpoint
 app.get("/deers",(req,res) => {
     res.send({
@@ -44,6 +53,11 @@ app.get("/cups",(req,res) => {
     res.send({
         purpose: "To drink coffee!"
     })
+})
+
+app.post("/actors",(req, res) => {
+    console.log(req.body);
+    res.send({data: req.body.name})
 })
 
 app.listen(8080, () => {
