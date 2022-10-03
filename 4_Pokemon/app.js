@@ -8,20 +8,29 @@ const app = express()
 // Allows the client to load content from the public folder
 app.use(express.static("public"))
 
-const pokemon = {name: "Pikachu"}
+import fs from "fs"
+
+const navComponent = fs.readFileSync("./public/components/navbar/navbar.html").toString()
+const footerComponent = fs.readFileSync("./public/components/footer/footer.html").toString()
+
+const frontPage = fs.readFileSync("./public/pages/frontpage/frontpage.html").toString()
+const frontPagePage = navComponent + frontPage + footerComponent
+
+const battle =  fs.readFileSync("./public/pages/battle/battle.html").toString()
+const battlePage = navComponent + battle + footerComponent
 
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve("./public/frontpage/frontpage.html"))
+    res.send(frontPagePage)
+
 })
 app.get("/battle", (req, res) => {
     const randomPokemon = "pikachu"
-
     res.redirect(`/battle/${randomPokemon}`)
 
 })
 
 app.get("/battle/:pokemonName", (req, res) => {
-    res.sendFile(path.resolve("./public/battle/battle.html"))
+    res.send(battlePage)
 })
 
 app.get("/api/pokemon", (req, res) => {
