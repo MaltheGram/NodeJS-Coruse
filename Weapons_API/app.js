@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-let currentId = 4
+currentId = 4
 
 let weapons = [
     { id: 1, name: "AK-47", price: 3500 },

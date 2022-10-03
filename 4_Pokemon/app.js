@@ -13,8 +13,14 @@ const pokemon = {name: "Pikachu"}
 app.get("/", (req, res) => {
     res.sendFile(path.resolve("./public/frontpage/frontpage.html"))
 })
-
 app.get("/battle", (req, res) => {
+    const randomPokemon = "pikachu"
+
+    res.redirect(`/battle/${randomPokemon}`)
+
+})
+
+app.get("/battle/:pokemonName", (req, res) => {
     res.sendFile(path.resolve("./public/battle/battle.html"))
 })
 
@@ -22,6 +28,10 @@ app.get("/api/pokemon", (req, res) => {
     fetch("https://pokeapi.co/api/v2/pokemon")
         .then(result => result.json())
         .then(result => res.send({data: result}))
+})
+
+app.get("/contact", (req, res) => {
+    res.sendFile(path.resolve("./public/contact/contact.html"))
 })
 
 const PORT = process.env.PORT || 8080

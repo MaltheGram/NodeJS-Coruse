@@ -60,6 +60,26 @@ app.post("/actors",(req, res) => {
     res.send({data: req.body.name})
 })
 
+app.get("/lookunderthebed", (req,res) => {
+
+    if (req.query.flashlight) {
+        return res.send({message: "You are safe"})
+    }
+    res.redirect("/monsters")
+
+    /*
+    req.query.flashlight === "true"
+        ? res.send({message: "You are safe"})
+        : res.redirect("/monsters")
+        
+     */
+})
+
+app.get("/monsters", (req,res) => {
+    res.send({message: "Monsters are all over the place"})
+})
+
+
 app.listen(8080, () => {
     console.log("Server is running on port",8080)
 })

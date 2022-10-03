@@ -4,19 +4,31 @@
 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./frontpage/frontpage.css">
+    <link rel="stylesheet" href="./frontpage/footer.css">
     <!-- HTML way to redirect
     <meta http-equiv="refresh" content="3 url=/battle">
     -->
     <title>| Pokemon |</title>
 </head>
 <body>
+<nav>
+    <a href="/">Logo</a>
+    <a href="/battle"><button id="btn">Battle</button></a>
+    <a href="/contact"><button id="btn">Contact</button></a>
 
-<h1>Pokemon</h1>
+</nav>
+<main>
 
-<a href="/battle"><button id="btn">Battle</button></a>
+    <h1>Pokemon</h1>
+    <div id="pokemon"></div>
+</main>
 
-<div id="pokemon"></div>
+<footer>
+    <p id="copyright"></p>
+
+</footer>
 
 <script src="./frontpage/frontpage.js"></script>
+<script src="./frontpage/footer.js"></script>
 </body>
 </html>

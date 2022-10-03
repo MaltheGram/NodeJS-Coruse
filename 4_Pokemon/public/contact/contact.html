@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>| Contact |</title>
+
+    <link rel="stylesheet" href="../frontpage/footer.css">
+    <link rel="stylesheet" href="contact.css">
+
+</head>
+<body>
+<nav>
+    <a href="/">Logo</a>
+    <a href="/battle"><button id="btn">Battle</button></a>
+    <a href="/contact"><button id="btn">Contact</button></a>
+
+
+</nav>
+
+<main>
+    <br>
+    <div class="container">
+        <form action="/api/contact" method="POST">
+            <label for="name">Name</label>
+            <input name="name" type="text" placeholder="Name">
+
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="example@mail.com">
+
+            <label for="feedback">Feedback</label>
+            <textarea name="feedback" cols="100" rows="20" placeholder="Your site rocks!"></textarea>
+
+            <button type="submit">Submit feedback</button>
+
+        </form>
+    </div>
+
+</main>
+<footer>
+    <p id="copyright"></p>
+</footer>
+
+
+<script src="../frontpage/footer.js"></script>
+</body>
+</html>
