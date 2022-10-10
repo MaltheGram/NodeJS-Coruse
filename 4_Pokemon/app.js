@@ -1,61 +1,55 @@
 import express from "express"
-import path from "path"
-import e from "express";
+import pokemonRouter from "./routers/pokemonRouter.js"
 
-// Instantiate express
 const app = express()
+app.use(pokemonRouter)
 
-// Allows the client to load content from the public folder
 app.use(express.static("public"))
 
-import fs from "fs"
+import {renderPage, injectData} from "./util/templateEngine.js"
 
-const navComponent = fs.readFileSync("./public/components/navbar/navbar.html").toString()
-const footerComponent = fs.readFileSync("./public/components/footer/footer.html").toString()
+const frontpagePage = renderPage("/frontpage/frontpage.html",
+    {
+        tabTitle: "Pokemon",
+        cssLink: `<link rel="stylesheet" href="/pages/frontpage/frontpage.css">`
+    })
 
-const frontPage = fs.readFileSync("./public/pages/frontpage/frontpage.html").toString()
-const frontPagePage = navComponent + frontPage + footerComponent
+const contactPage = renderPage("/contact/contact.html", {
+    tabTitle: "Contact Us",
+    cssLink: `<link rel="stylesheet" href="/pages/contact/contact.css">`
+})
 
-const battle =  fs.readFileSync("./public/pages/battle/battle.html").toString()
-const battlePage = navComponent + battle + footerComponent
-
-app.get("/", (req, res) => {
-    res.send(frontPagePage)
+const battlePage = renderPage("/battle/battle.html", {
+    tabTitle: "",
+    cssLink: `<link rel="stylesheet" href="/pages/battle/battle.css">`
 
 })
-app.get("/battle", (req, res) => {
-    const randomPokemon = "pikachu"
-    res.redirect(`/battle/${randomPokemon}`)
 
+app.get("/", (req, res) => {
+    res.send(frontpagePage);
+})
+
+const randomPokemon = ["pikachu", "slowpoke", "ditto"]
+app.get("/battle", (req, res) => {
+    res.redirect(`battle/${randomPokemon[Math.floor(Math.random() * randomPokemon.length)]}`)
 })
 
 app.get("/battle/:pokemonName", (req, res) => {
-    res.send(battlePage)
-})
-
-app.get("/api/pokemon", (req, res) => {
-    fetch("https://pokeapi.co/api/v2/pokemon")
-        .then(result => result.json())
-        .then(result => res.send({data: result}))
+    const pokemonName = req.params.pokemonName
+    //let battlePageWithData = injectData(battlePage, {pokemonName})
+    res.send(battlePage.replace("%%TAB_TITLE%%", `Battle ${req.params.pokemonName}`));
 })
 
 app.get("/contact", (req, res) => {
-    res.sendFile(path.resolve("./public/contact/contact.html"))
+    res.send(contactPage);
 })
+
 
 const PORT = process.env.PORT || 8080
 
-console.log(process.env.PORT)
-
 const server = app.listen(PORT, (error) => {
     if (error) {
-        console.log(error)
+        console.log(error);
     }
-    console.log("Server is running on port,", server.address().port)
-})
-
-/*
-app.listen(8080, (error) => {
-    console.log(error)
-    console.log("Listening on port", 8080)
-})*/
+    console.log("Server is running on port", server.address().port)
+});
